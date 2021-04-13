@@ -85,10 +85,10 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepositoryJdbc {
             pst.setLong(3, message.getChatroom().getId());
 
             pst.execute();
-            ResultSet rs = pst.getGeneratedKeys();
-            rs.next();
-            message.setId(rs.getLong(MESSAGE_ID));
-            message.setCreationDate(rs.getTimestamp(MESSAGE_DATE));
+            resultSet = pst.getGeneratedKeys();
+            resultSet.next();
+            message.setId(resultSet.getLong(MESSAGE_ID));
+            message.setCreationDate(resultSet.getTimestamp(MESSAGE_DATE));
             pst.close();
         } catch (SQLException e) {
             throw new NotSavedSubEntityException("Not Saved Entity", e);
