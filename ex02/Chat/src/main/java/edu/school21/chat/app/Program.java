@@ -18,7 +18,7 @@ public class Program {
         Message message = new Message(author, room, "Hello!");
         MessagesRepositoryJdbc messagesRepository = new MessagesRepositoryJdbcImpl(DataSourceServices.INSTANSE.getDataSource());
         messagesRepository.save(message);
-        System.out.println(message.getId());
+        System.out.println(message);
         DataSourceServices.INSTANSE.close();
     }
 }

@@ -73,17 +73,22 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepositoryJdbc {
 
     @Override
     public void save(Message message) {
-        String saveMessage = "insert into messages (text , message_author, message_room) VALUES (?, ?, ?);";
+        String saveMessage = "insert into messages (message_id, text , message_author, message_room, message_date) VALUES (default , ?, ?, ?, default );";
         Connection con = null;
         PreparedStatement pst = null;
         ResultSet resultSet = null;
 
         try {
-            pst = dataSource.getConnection().prepareStatement(saveMessage);
+            pst = dataSource.getConnection().prepareStatement(saveMessage, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, message.getText());
             pst.setLong(2, message.getAuthor().getId());
             pst.setLong(3, message.getChatroom().getId());
-            pst.executeUpdate();
+
+            pst.execute();
+            ResultSet rs = pst.getGeneratedKeys();
+            rs.next();
+            message.setId(rs.getLong(MESSAGE_ID));
+            message.setCreationDate(rs.getTimestamp(MESSAGE_DATE));
             pst.close();
         } catch (SQLException e) {
             throw new NotSavedSubEntityException("Not Saved Entity", e);

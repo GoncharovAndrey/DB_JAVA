@@ -27,6 +27,10 @@ public class Message {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public User getAuthor() {
         return author;
     }
@@ -53,6 +57,10 @@ public class Message {
 
     public Timestamp getCreationDate() {
         return creationDate;
+    }
+
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override
