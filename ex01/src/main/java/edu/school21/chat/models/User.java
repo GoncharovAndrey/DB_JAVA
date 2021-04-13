@@ -1,7 +1,6 @@
 package edu.school21.chat.models;
 
 import java.util.List;
-import java.util.Objects;
 
 public class User {
 

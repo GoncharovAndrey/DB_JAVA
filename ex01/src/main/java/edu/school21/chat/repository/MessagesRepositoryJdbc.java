@@ -1,6 +1,10 @@
 package edu.school21.chat.repository;
 
-import javax.sql.DataSource;
+import edu.school21.chat.models.Message;
 
-public interface MessagesRepositoryJdbc extends DataSource {
+import java.util.Optional;
+
+public interface MessagesRepositoryJdbc {
+
+    Optional<Message> findById(Long id);
 }

@@ -1,13 +1,12 @@
 package edu.school21.chat.models;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Chatroom {
     private long id;
     private String chatName;
     private User owner;
-    private List<Massage> massages;
+    private List<Message> messages;
 
     public Chatroom(String chatName, User owner) {
         this.chatName = chatName;
@@ -36,25 +35,30 @@ public class Chatroom {
         this.owner = owner;
     }
 
-    public List<Massage> getMassages() {
-        return massages;
+    public List<Message> getMassages() {
+        return messages;
     }
 
-    public void setMassages(List<Massage> massages) {
-        this.massages = massages;
+    public void setMassages(List<Message> massages) {
+        this.messages = massages;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Chatroom)) return false;
+
         Chatroom chatroom = (Chatroom) o;
-        return id == chatroom.id && chatName.equals(chatroom.chatName);
+
+        if (id != chatroom.id) return false;
+        return chatName.equals(chatroom.chatName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, chatName);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + chatName.hashCode();
+        return result;
     }
 
     @Override
@@ -63,7 +67,7 @@ public class Chatroom {
                 "id=" + id +
                 ", chatName='" + chatName + '\'' +
                 ", owner=" + owner +
-                ", massages=" + massages +
+                ", messages=" + messages +
                 '}';
     }
 }

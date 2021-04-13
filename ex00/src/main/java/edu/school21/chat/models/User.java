@@ -1,7 +1,6 @@
 package edu.school21.chat.models;
 
 import java.util.List;
-import java.util.Objects;
 
 public class User {
 
@@ -62,13 +61,18 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
+
         User user = (User) o;
-        return id == user.id && login.equals(user.login);
+
+        if (id != user.id) return false;
+        return login.equals(user.login);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + login.hashCode();
+        return result;
     }
 
     @Override
